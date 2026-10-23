@@ -5,7 +5,13 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: './',
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web'
+    }
+  },
   server: {
+    host: '0.0.0.0', // binds to all network interfaces so davidhany.local works!
     port: 3000,
     open: true
   },

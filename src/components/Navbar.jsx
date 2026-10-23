@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { AudioContext } from '../App'
+import { openLinkedIn, LINKEDIN_URL, openGitHub } from '../utils/linking'
 
-export default function Navbar() {
+export default function Navbar({ onOpenCV }) {
   const { audioEnabled, setAudioEnabled, playBeep, playChirp } = useContext(AudioContext)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -21,13 +22,13 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="nav-hud">
+    <nav className="nav-hud holo-glass">
       <a href="#hero" className="brand-badge">
         <div className="brand-hex">DH</div>
         <div className="brand-text">
           <span className="brand-title">DAVID HANY</span>
           <span className="brand-status">
-            <span className="pulse-dot" /> SEC_CORE: ACTIVE
+            <span className="pulse-dot" /> CYBER // AI ENGINEER
           </span>
         </div>
       </a>
@@ -48,22 +49,40 @@ export default function Navbar() {
       </ul>
 
       <div className="nav-actions">
+        {/* Verified LinkedIn Button */}
         <button
-          className={`audio-toggle-btn ${audioEnabled ? 'active' : ''}`}
+          onClick={() => { playBeep(950, 0.04); openLinkedIn() }}
+          className="cyber-icon-btn holo-btn"
+          title="Connect on LinkedIn (david-hany)"
+          aria-label="LinkedIn Profile"
+        >
+          <i className="fab fa-linkedin-in text-cyan" />
+        </button>
+
+        {/* Audio Toggle */}
+        <button
+          className={`cyber-icon-btn ${audioEnabled ? 'active' : ''}`}
           onClick={toggleAudio}
           title={audioEnabled ? 'Sound: Enabled' : 'Sound: Muted'}
+          aria-label="Toggle Sound"
         >
           <i className={`fas ${audioEnabled ? 'fa-volume-up' : 'fa-volume-mute'}`} />
         </button>
 
-        <a href="#contact" className="cyber-btn cyber-btn-primary nav-connect-btn">
-          <span>CONNECT</span>
-        </a>
+        {/* CV Preview Trigger */}
+        <button
+          onClick={() => { playBeep(900, 0.04); onOpenCV() }}
+          className="cyber-btn cyber-btn-primary nav-connect-btn"
+        >
+          <i className="fas fa-file-pdf" />
+          <span>RESUME</span>
+        </button>
 
+        {/* Mobile Hamburger */}
         <button
           className="mobile-toggle"
           onClick={() => setMobileOpen(prev => !prev)}
-          aria-label="Menu"
+          aria-label="Toggle Navigation"
         >
           <i className={`fas ${mobileOpen ? 'fa-times' : 'fa-bars'}`} />
         </button>

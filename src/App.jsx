@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -11,6 +11,8 @@ import Footer from './components/Footer'
 import CyberToast from './components/CyberToast'
 import Scanlines from './components/Scanlines'
 import CVModal from './components/CVModal'
+import HoloTelemetryBar from './components/HoloTelemetryBar'
+import MobileBottomNav from './components/MobileBottomNav'
 
 export const AudioContext = createContext()
 export const ToastContext = createContext()
@@ -20,6 +22,7 @@ function App() {
   const [toast, setToast] = useState({ show: false, message: '' })
   const [audioCtx, setAudioCtx] = useState(null)
   const [cvOpen, setCvOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('hero')
 
   const showToast = (message) => {
     setToast({ show: true, message })
@@ -102,6 +105,27 @@ function App() {
     })
   }
 
+  // Active section scroll spy
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['hero', 'about', 'experience', 'projects', 'skills', 'certifications', 'contact']
+      const scrollPos = window.scrollY + 200
+      for (const s of sections) {
+        const el = document.getElementById(s)
+        if (el) {
+          const top = el.offsetTop
+          const height = el.offsetHeight
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(s)
+            break
+          }
+        }
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const audioAPI = {
     audioEnabled, setAudioEnabled,
     playBeep, playChirp, playLaser, playSuccess
@@ -111,6 +135,7 @@ function App() {
     <AudioContext.Provider value={audioAPI}>
       <ToastContext.Provider value={showToast}>
         <Scanlines />
+        <HoloTelemetryBar />
         <Navbar onOpenCV={() => setCvOpen(true)} />
         <Hero onOpenCV={() => setCvOpen(true)} />
         <About />
@@ -120,6 +145,7 @@ function App() {
         <Certifications />
         <Contact />
         <Footer />
+        <MobileBottomNav activeSection={activeSection} />
         <CVModal isOpen={cvOpen} onClose={() => setCvOpen(false)} />
         <CyberToast show={toast.show} message={toast.message} />
       </ToastContext.Provider>

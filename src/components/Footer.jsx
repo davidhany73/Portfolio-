@@ -1,24 +1,54 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AudioContext } from '../App'
+import { openLinkedIn, openGitHub, LINKEDIN_URL, GITHUB_URL, EMAIL_ADDRESS, PHONE_NUMBER } from '../utils/linking'
 
 export default function Footer() {
+  const { playBeep } = useContext(AudioContext)
+
   return (
     <footer className="site-footer">
       <div className="container footer-content">
         <div className="footer-credits">
-          <p>&copy; 2026 David Hany. Engineered for Cyber Security & Artificial Intelligence.</p>
-          <p style={{ marginTop: '0.25rem' }}>Built with React, Three.js & Cyber Dark UI.</p>
+          <p className="font-display" style={{ color: '#fff', fontSize: '0.95rem' }}>
+            &copy; 2026 DAVID HANY &bull; CYBER SECURITY & AI ENGINEER
+          </p>
+          <p style={{ marginTop: '0.25rem', color: 'var(--text-dim)', fontSize: '0.8rem' }}>
+            Engineered with React Native for Web &bull; Three.js 3D Holo-Core &bull; Alexandria, Egypt
+          </p>
         </div>
         <div className="footer-socials">
-          {[
-            { href: 'https://github.com/davidhany10', icon: 'fab fa-github', title: 'GitHub' },
-            { href: 'https://www.linkedin.com/in/david-hany', icon: 'fab fa-linkedin-in', title: 'LinkedIn' },
-            { href: 'mailto:202201324@pua.edu.eg', icon: 'fas fa-envelope', title: 'Email' },
-            { href: 'tel:+201212222818', icon: 'fas fa-phone', title: 'Phone' },
-          ].map(s => (
-            <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className="social-link" title={s.title}>
-              <i className={s.icon} />
-            </a>
-          ))}
+          <button
+            onClick={() => { playBeep(900, 0.03); openLinkedIn() }}
+            className="social-link holo-btn"
+            title="LinkedIn (david-hany)"
+            aria-label="LinkedIn"
+          >
+            <i className="fab fa-linkedin-in text-cyan" />
+          </button>
+          <button
+            onClick={() => { playBeep(900, 0.03); openGitHub() }}
+            className="social-link holo-btn"
+            title="GitHub (davidhany10)"
+            aria-label="GitHub"
+          >
+            <i className="fab fa-github text-green" />
+          </button>
+          <a
+            href={`mailto:${EMAIL_ADDRESS}`}
+            className="social-link"
+            title="Email"
+            onClick={() => playBeep(900, 0.03)}
+          >
+            <i className="fas fa-envelope text-purple" />
+          </a>
+          <a
+            href={`tel:${PHONE_NUMBER.replace(/\s+/g, '')}`}
+            className="social-link"
+            title="Phone"
+            onClick={() => playBeep(900, 0.03)}
+          >
+            <i className="fas fa-phone text-cyan" />
+          </a>
         </div>
       </div>
     </footer>
