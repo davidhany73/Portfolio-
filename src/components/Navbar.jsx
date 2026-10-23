@@ -1,16 +1,18 @@
 import React, { useContext, useState } from 'react'
 import { AudioContext } from '../App'
-import { openLinkedIn, LINKEDIN_URL, openGitHub } from '../utils/linking'
+import { openLinkedIn } from '../utils/linking'
+import { portfolioData } from '../data/portfolioData'
 
 export default function Navbar({ onOpenCV }) {
   const { audioEnabled, setAudioEnabled, playBeep, playChirp } = useContext(AudioContext)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { personalInfo } = portfolioData
 
   const links = [
     { href: '#hero', label: 'Home' },
     { href: '#about', label: 'About' },
-    { href: '#experience', label: 'Experience' },
     { href: '#projects', label: 'Projects' },
+    { href: '#experience', label: 'Experience' },
     { href: '#skills', label: 'Skills' },
     { href: '#certifications', label: 'Certs' },
     { href: '#contact', label: 'Contact' },
@@ -24,11 +26,11 @@ export default function Navbar({ onOpenCV }) {
   return (
     <nav className="nav-hud holo-glass">
       <a href="#hero" className="brand-badge">
-        <div className="brand-hex">DH</div>
+        <div className="brand-hex">DB</div>
         <div className="brand-text">
-          <span className="brand-title">DAVID HANY</span>
+          <span className="brand-title">{personalInfo.name.toUpperCase()}</span>
           <span className="brand-status">
-            <span className="pulse-dot" /> CYBER // AI ENGINEER
+            <span className="pulse-dot" /> CYBER // AI DEVELOPER
           </span>
         </div>
       </a>
@@ -53,7 +55,7 @@ export default function Navbar({ onOpenCV }) {
         <button
           onClick={() => { playBeep(950, 0.04); openLinkedIn() }}
           className="cyber-icon-btn holo-btn"
-          title="Connect on LinkedIn (david-hany-naeam-a9485032b)"
+          title={`Connect on LinkedIn (${portfolioData.socialLinks.linkedinDisplay})`}
           aria-label="LinkedIn Profile"
         >
           <i className="fab fa-linkedin-in text-cyan" />

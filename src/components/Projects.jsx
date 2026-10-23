@@ -1,82 +1,6 @@
 import React, { useState, useRef, useContext } from 'react'
 import { AudioContext } from '../App'
-
-const projectsData = [
-  {
-    title: 'UpHeal / MindQuest',
-    category: 'rasp ai',
-    icon: 'fa-shield-cat',
-    iconColor: null,
-    badge: 'Graduation Project',
-    badgeClass: 'badge-featured',
-    desc: 'Engineered a multi-layered Android security paradigm featuring a Host-Based Intrusion Prevention System (HIPS), Edge AI for real-time visual classification, and Runtime Application Self-Protection (RASP) against reverse-engineering and runtime hooking.',
-    tags: ['Android Security', 'Edge AI', 'RASP', 'TensorFlow Lite', 'HIPS'],
-    linkColor: null,
-  },
-  {
-    title: 'Custom C2 Framework (Craxs RAT)',
-    category: 'c2',
-    icon: 'fa-skull',
-    iconColor: 'var(--red-alert)',
-    badge: 'Red Team Tool',
-    badgeClass: 'badge-redteam',
-    desc: 'Developed a Python-based Command and Control (C2) server and client payload architecture simulating remote shell access, automated directory traversal, and cryptographic file operations for red team penetration testing.',
-    tags: ['Python', 'C2 Architecture', 'Socket Programming', 'Cryptography', 'Red Team'],
-    linkColor: 'var(--red-alert)',
-  },
-  {
-    title: 'Automated Attendance System',
-    category: 'ai',
-    icon: 'fa-eye',
-    iconColor: 'var(--green-cyber)',
-    badge: 'Computer Vision',
-    badgeClass: 'badge-ai',
-    desc: 'Architected an intelligent biometric tracking system utilizing OpenCV and Python for automated facial recognition, real-time feature extraction, and verifiable attendance recording with database synchronization.',
-    tags: ['Python', 'OpenCV', 'Facial Recognition', 'NumPy'],
-    linkColor: 'var(--green-cyber)',
-  },
-  {
-    title: 'Blockchain Wallet',
-    category: 'crypto',
-    icon: 'fa-cube',
-    iconColor: null,
-    badge: 'Cryptography',
-    badgeClass: 'badge-featured',
-    desc: 'Engineered a cryptographically secure digital transaction wallet implementing asymmetric key generation, SHA-256 hash chains, and digital signatures to guarantee untampered ledger transactions.',
-    tags: ['Cryptography', 'SHA-256', 'Digital Signatures', 'Public-Key Infra'],
-    linkColor: null,
-  },
-  {
-    title: 'Secure Banking App Prototype',
-    category: 'crypto',
-    icon: 'fa-vault',
-    iconColor: null,
-    badge: 'FinTech Security',
-    badgeClass: 'badge-featured',
-    desc: 'Simulated a resilient enterprise banking application in Java featuring secure transaction processing pipelines, encrypted credential stores, and tamper-resistant audit activity logging.',
-    tags: ['Java', 'Secure Transactions', 'Audit Logging', 'Encryption'],
-    linkColor: null,
-  },
-  {
-    title: 'Social Media DB Clone',
-    category: 'crypto',
-    icon: 'fa-database',
-    iconColor: null,
-    badge: 'Backend & DB',
-    badgeClass: 'badge-featured',
-    desc: 'Rebuilt and optimized a scalable relational database clone utilizing MySQL schemas for high-concurrency data storage, paired with a Flask RESTful framework for backend feature testing.',
-    tags: ['MySQL', 'Flask', 'Python', 'REST APIs'],
-    linkColor: null,
-  },
-]
-
-const filters = [
-  { label: 'All Systems', value: 'all' },
-  { label: 'Edge AI & RASP', value: 'rasp' },
-  { label: 'Red Team & C2', value: 'c2' },
-  { label: 'Vision & AI', value: 'ai' },
-  { label: 'Crypto & Backend', value: 'crypto' },
-]
+import { portfolioData } from '../data/portfolioData'
 
 function TiltCard({ project, onHoverSound }) {
   const ref = useRef(null)
@@ -89,8 +13,8 @@ function TiltCard({ project, onHoverSound }) {
     const y = e.clientY - rect.top
     const cx = rect.width / 2
     const cy = rect.height / 2
-    const rotateX = ((y - cy) / cy) * -12
-    const rotateY = ((x - cx) / cx) * 12
+    const rotateX = ((y - cy) / cy) * -10
+    const rotateY = ((x - cx) / cx) * 10
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
     card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`)
     card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`)
@@ -100,43 +24,68 @@ function TiltCard({ project, onHoverSound }) {
     if (ref.current) ref.current.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)'
   }
 
-  const iconStyle = project.iconColor
-    ? { borderColor: project.iconColor, color: project.iconColor }
-    : {}
-
   return (
     <div
-      className="project-card"
+      className={`project-card holo-border ${project.featured ? 'project-featured' : ''}`}
       ref={ref}
-      data-category={project.category}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       onMouseEnter={onHoverSound}
     >
       <div className="project-top">
         <div className="project-header-meta">
-          <div className="project-icon-box" style={iconStyle}>
-            <i className={`fas ${project.icon}`} />
+          <div className="project-icon-box">
+            <i className={`fas ${
+              project.category.includes('ai') ? 'fa-brain text-green' :
+              project.category.includes('c2') || project.category.includes('redteam') ? 'fa-skull text-red' :
+              project.category.includes('systems') ? 'fa-robot text-purple' :
+              project.category.includes('web') ? 'fa-cube text-cyan' :
+              'fa-shield-halved text-cyan'
+            }`} />
           </div>
-          <span className={`project-badge ${project.badgeClass}`}>{project.badge}</span>
+          <span className={`project-badge ${project.badgeColor || 'badge-featured'}`}>
+            {project.badge}
+          </span>
         </div>
+
         <h3 className="project-title">{project.title}</h3>
-        <p className="project-desc">{project.desc}</p>
+        <p className="project-desc">{project.description}</p>
       </div>
+
       <div className="project-bottom">
+        {/* Tech Stack Chips */}
         <div className="project-tags">
-          {project.tags.map(t => <span className="tag-chip" key={t}>{t}</span>)}
+          {project.tech.map(t => (
+            <span className="tag-chip" key={t}>{t}</span>
+          ))}
         </div>
+
+        {/* Action Buttons: GitHub Repo + Optional Demo */}
         <div className="project-actions">
           <a
-            href="https://github.com/davidhany10"
+            href={project.github}
             target="_blank"
             rel="noopener noreferrer"
             className="project-link-btn"
-            style={project.linkColor ? { color: project.linkColor } : {}}
+            title={`View ${project.title} on GitHub`}
           >
-            <span>View Code</span> <i className="fas fa-arrow-up-right-from-square" />
+            <i className="fab fa-github" />
+            <span>GitHub Repo</span>
+            <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '0.75rem' }} />
           </a>
+
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-link-btn text-green"
+              style={{ marginLeft: 'auto' }}
+            >
+              <i className="fas fa-play" />
+              <span>Live Demo</span>
+            </a>
+          )}
         </div>
       </div>
     </div>
@@ -145,42 +94,88 @@ function TiltCard({ project, onHoverSound }) {
 
 export default function Projects() {
   const [filter, setFilter] = useState('all')
+  const [search, setSearch] = useState('')
   const { playBeep } = useContext(AudioContext)
+  const { categories, projects } = portfolioData
 
-  const filtered = filter === 'all'
-    ? projectsData
-    : projectsData.filter(p => p.category.includes(filter))
+  const filtered = projects.filter(p => {
+    const matchesFilter = filter === 'all' || p.category.includes(filter)
+    const matchesSearch = search.trim() === '' ||
+      p.title.toLowerCase().includes(search.toLowerCase()) ||
+      p.description.toLowerCase().includes(search.toLowerCase()) ||
+      p.tech.some(t => t.toLowerCase().includes(search.toLowerCase()))
+    return matchesFilter && matchesSearch
+  })
 
   return (
     <section id="projects">
       <div className="container">
         <div className="section-header">
-          <span className="section-pretitle"><i className="fas fa-microchip" /> DEPLOYED ARTIFACTS // LAB</span>
-          <h2 className="section-title">Featured Projects</h2>
-          <p className="section-subtitle">Interactive 3D cards displaying offensive frameworks, intelligent defenses, and secure prototypes.</p>
+          <span className="section-pretitle"><i className="fas fa-code-branch" /> GITHUB_REPOSITORIES // SHOWCASE</span>
+          <h2 className="section-title holo-title">Featured Projects</h2>
+          <p className="section-subtitle">
+            Dynamic repository showcase sourced directly from{' '}
+            <a href="https://github.com/davidhany73" target="_blank" rel="noopener noreferrer" className="text-cyan font-mono" style={{ textDecoration: 'none' }}>
+              github.com/davidhany73 <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '0.75rem' }} />
+            </a>
+          </p>
         </div>
 
-        <div className="projects-filter-bar">
-          {filters.map(f => (
-            <button
-              key={f.value}
-              className={`filter-btn ${filter === f.value ? 'active' : ''}`}
-              onClick={() => { setFilter(f.value); playBeep(850, 0.03) }}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="projects-grid">
-          {filtered.map(p => (
-            <TiltCard
-              key={p.title}
-              project={p}
-              onHoverSound={() => playBeep(850, 0.03)}
+        {/* Search Bar & Filter Controls */}
+        <div className="projects-controls-wrapper">
+          <div className="projects-search-box holo-border">
+            <i className="fas fa-magnifying-glass text-cyan" />
+            <input
+              type="text"
+              placeholder="Search projects by name, language, or tech stack (e.g. Python, OpenCV, C)..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="projects-search-input"
             />
-          ))}
+            {search && (
+              <button onClick={() => setSearch('')} className="search-clear-btn" aria-label="Clear search">
+                &times;
+              </button>
+            )}
+          </div>
+
+          <div className="projects-filter-bar">
+            {categories.map(c => (
+              <button
+                key={c.value}
+                className={`filter-btn ${filter === c.value ? 'active' : ''}`}
+                onClick={() => { setFilter(c.value); playBeep(850, 0.03) }}
+              >
+                {c.label}
+              </button>
+            ))}
+          </div>
         </div>
+
+        {/* Project Cards Grid */}
+        {filtered.length > 0 ? (
+          <div className="projects-grid">
+            {filtered.map(p => (
+              <TiltCard
+                key={p.id}
+                project={p}
+                onHoverSound={() => playBeep(850, 0.03)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="projects-empty-state holo-glass">
+            <i className="fas fa-folder-open text-dim" style={{ fontSize: '2.5rem', marginBottom: '1rem' }} />
+            <p className="font-mono text-muted">No repositories found matching "{search}".</p>
+            <button
+              onClick={() => { setSearch(''); setFilter('all'); }}
+              className="cyber-btn cyber-btn-primary"
+              style={{ marginTop: '1rem', padding: '0.5rem 1.2rem', fontSize: '0.8rem' }}
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

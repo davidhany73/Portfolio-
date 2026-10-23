@@ -1,9 +1,10 @@
 import { Linking } from 'react-native'
+import { portfolioData } from '../data/portfolioData'
 
-export const LINKEDIN_URL = 'https://www.linkedin.com/in/david-hany-naeam-a9485032b'
-export const GITHUB_URL = 'https://github.com/davidhany10'
-export const EMAIL_ADDRESS = '202201324@pua.edu.eg'
-export const PHONE_NUMBER = '+20 121 222 2818'
+export const LINKEDIN_URL = portfolioData.socialLinks.linkedin
+export const GITHUB_URL = portfolioData.socialLinks.github
+export const EMAIL_ADDRESS = portfolioData.personalInfo.email
+export const PHONE_NUMBER = portfolioData.personalInfo.phone
 
 export const openUrl = async (url) => {
   try {

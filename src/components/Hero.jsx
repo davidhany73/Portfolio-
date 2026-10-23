@@ -1,34 +1,61 @@
-import React, { useContext } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { TouchableOpacity } from 'react-native'
 import ThreeHero from './ThreeHero'
 import { AudioContext } from '../App'
-import { openLinkedIn, openGitHub, LINKEDIN_URL, GITHUB_URL } from '../utils/linking'
+import { openLinkedIn, openGitHub } from '../utils/linking'
+import { portfolioData } from '../data/portfolioData'
 
 export default function Hero({ onOpenCV }) {
   const { playBeep } = useContext(AudioContext)
+  const [imgError, setImgError] = useState(false)
   const basePath = import.meta.env.BASE_URL || './'
+  const { personalInfo } = portfolioData
 
   return (
     <section className="hero-section" id="hero">
       <div className="container hero-grid">
         <div className="hero-content">
+          
+          {/* Top Tagline */}
           <div className="hero-tagline-wrapper holo-border">
             <i className="fas fa-shield-halved text-cyan" />
             <span>PROTOCOL 0x7E // QUANTUM DEFENSE & NEURAL AI</span>
           </div>
 
-          <h1 className="hero-name holo-title">David Hany</h1>
+          {/* Profile Picture & Identity Badge Header */}
+          <div className="hero-profile-header">
+            <div className="profile-avatar-wrapper">
+              <div className="profile-scanner-ring" />
+              <img
+                src={imgError ? 'https://avatars.githubusercontent.com/u/347058330?v=4' : personalInfo.avatar}
+                alt={personalInfo.name}
+                className="profile-avatar-img"
+                onError={() => setImgError(true)}
+              />
+              <span className="profile-status-blip" title="System Status: Active" />
+            </div>
+
+            <div className="profile-meta-text">
+              <span className="profile-handle-badge">
+                <i className="fab fa-github text-green" /> @{portfolioData.socialLinks.githubUsername}
+              </span>
+              <span className="profile-location-text">
+                <i className="fas fa-location-dot text-cyan" /> {personalInfo.location}
+              </span>
+            </div>
+          </div>
+
+          <h1 className="hero-name holo-title">{personalInfo.name}</h1>
+          <div className="hero-alt-name">
+            <span>Also known as <strong>{personalInfo.preferredName}</strong></span>
+          </div>
 
           <div className="hero-role">
-            <span className="text-cyan">Cyber Security Specialist</span>
-            <span className="hero-role-separator">&bull;</span>
-            <span className="text-green glow-green">AI Engineer</span>
+            <span style={{ color: '#000000', fontWeight: '800' }}>{personalInfo.title}</span>
           </div>
 
           <p className="hero-description">
-            Securing mission-critical networks, executing red-team penetration operations,
-            and architecting resilient <span className="hero-highlight">Edge AI & RASP paradigms</span>.
-            Bridging adversarial offensive testing with autonomous defense algorithms.
+            {personalInfo.tagline}
           </p>
 
           {/* React Native Touchable CTA Group */}
@@ -45,8 +72,8 @@ export default function Hero({ onOpenCV }) {
             </TouchableOpacity>
 
             <a
-              href={`${basePath}David_Hany_CV.pdf`}
-              download="David_Hany_CV.pdf"
+              href={`${basePath}${personalInfo.cvFileName}`}
+              download={personalInfo.cvFileName}
               className="cyber-btn cyber-btn-outline"
               onMouseEnter={() => playBeep(850, 0.03)}
             >
@@ -54,7 +81,7 @@ export default function Hero({ onOpenCV }) {
               <span>Download PDF</span>
             </a>
 
-            {/* React Native LinkedIn Link (Verified True Check) */}
+            {/* Verified LinkedIn with True Checkmark */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => { playBeep(900, 0.03); openLinkedIn() }}
@@ -82,18 +109,14 @@ export default function Hero({ onOpenCV }) {
 
           {/* Live Holographic Telemetry Counters */}
           <div className="hero-metrics holo-glass">
-            <div className="metric-item">
-              <span className="metric-value text-cyan">120+</span>
-              <span className="metric-label">Telecom Sec Hours</span>
-            </div>
-            <div className="metric-item">
-              <span className="metric-value text-green">6+</span>
-              <span className="metric-label">Engineered Systems</span>
-            </div>
-            <div className="metric-item">
-              <span className="metric-value text-purple">4</span>
-              <span className="metric-label">Accreditations</span>
-            </div>
+            {personalInfo.metrics.map((m, i) => (
+              <div className="metric-item" key={i}>
+                <span className="metric-value" style={{ color: '#000000', fontWeight: '900' }}>
+                  {m.value}
+                </span>
+                <span className="metric-label">{m.label}</span>
+              </div>
+            ))}
           </div>
         </div>
 

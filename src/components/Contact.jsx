@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react'
 import { AudioContext, ToastContext } from '../App'
-import { openLinkedIn, LINKEDIN_URL, EMAIL_ADDRESS, PHONE_NUMBER } from '../utils/linking'
+import { openLinkedIn } from '../utils/linking'
+import { portfolioData } from '../data/portfolioData'
 
 export default function Contact() {
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const { playBeep, playLaser, playSuccess } = useContext(AudioContext)
   const showToast = useContext(ToastContext)
+  const { personalInfo, socialLinks } = portfolioData
 
   const copyToClipboard = (val, label) => {
     if (navigator.clipboard) {
@@ -25,7 +27,7 @@ export default function Contact() {
       setSending(false)
       setSent(true)
       playSuccess()
-      showToast('Encrypted Packet Dispatched to David Hany!')
+      showToast(`Encrypted Packet Dispatched to ${personalInfo.name}!`)
       e.target.reset()
       setTimeout(() => setSent(false), 3800)
     }, 1300)
@@ -59,7 +61,7 @@ export default function Contact() {
                 </div>
                 <div className="channel-details">
                   <span className="channel-label">Professional Network</span>
-                  <span className="channel-val">linkedin.com/in/david-hany-naeam-a9485032b</span>
+                  <span className="channel-val">{socialLinks.linkedinDisplay}</span>
                 </div>
                 <button
                   type="button"
@@ -71,6 +73,26 @@ export default function Contact() {
                 </button>
               </div>
 
+              {/* GitHub Channel */}
+              <div className="contact-channel-card holo-border">
+                <div className="channel-icon">
+                  <i className="fab fa-github text-green" />
+                </div>
+                <div className="channel-details">
+                  <span className="channel-label">GitHub Account</span>
+                  <span className="channel-val">github.com/{socialLinks.githubUsername}</span>
+                </div>
+                <a
+                  href={socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="copy-pill-btn holo-btn"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <i className="fas fa-arrow-up-right-from-square" /> Repos
+                </a>
+              </div>
+
               {/* Email */}
               <div className="contact-channel-card holo-border">
                 <div className="channel-icon">
@@ -78,12 +100,12 @@ export default function Contact() {
                 </div>
                 <div className="channel-details">
                   <span className="channel-label">Academic & Professional Email</span>
-                  <span className="channel-val">{EMAIL_ADDRESS}</span>
+                  <span className="channel-val">{personalInfo.email}</span>
                 </div>
                 <button
                   type="button"
                   className="copy-pill-btn"
-                  onClick={() => copyToClipboard(EMAIL_ADDRESS, 'Email')}
+                  onClick={() => copyToClipboard(personalInfo.email, 'Email')}
                 >
                   <i className="far fa-copy" /> Copy
                 </button>
@@ -96,12 +118,12 @@ export default function Contact() {
                 </div>
                 <div className="channel-details">
                   <span className="channel-label">Mobile & WhatsApp</span>
-                  <span className="channel-val">{PHONE_NUMBER}</span>
+                  <span className="channel-val">{personalInfo.phone}</span>
                 </div>
                 <button
                   type="button"
                   className="copy-pill-btn"
-                  onClick={() => copyToClipboard(PHONE_NUMBER, 'Phone')}
+                  onClick={() => copyToClipboard(personalInfo.phone, 'Phone')}
                 >
                   <i className="far fa-copy" /> Copy
                 </button>
@@ -114,7 +136,7 @@ export default function Contact() {
                 </div>
                 <div className="channel-details">
                   <span className="channel-label">Current Headquarters</span>
-                  <span className="channel-val">Alexandria, Egypt</span>
+                  <span className="channel-val">{personalInfo.location}</span>
                 </div>
               </div>
             </div>

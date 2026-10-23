@@ -25,11 +25,11 @@ export default function ThreeHero() {
     // 1. Central Quantum Icosahedron (Multi-layered Neural Node)
     const icoGeo = new THREE.IcosahedronGeometry(1.45, 1)
     const icoMat = new THREE.MeshPhongMaterial({
-      color: 0x00f0ff,
-      emissive: 0x051b30,
+      color: 0x0284c7,
+      emissive: 0x0f172a,
       wireframe: true,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.95,
       wireframeLinewidth: 2
     })
     const innerIco = new THREE.Mesh(icoGeo, icoMat)
@@ -37,10 +37,11 @@ export default function ThreeHero() {
 
     // 1b. Holographic Prismatic Core Sphere
     const coreGeo = new THREE.SphereGeometry(0.75, 32, 32)
-    const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x00ffcc,
+    const coreMat = new THREE.MeshPhongMaterial({
+      color: 0x0f172a,
+      emissive: 0x0284c7,
       transparent: true,
-      opacity: 0.75
+      opacity: 0.85
     })
     const coreSphere = new THREE.Mesh(coreGeo, coreMat)
     holoGroup.add(coreSphere)
@@ -52,22 +53,22 @@ export default function ThreeHero() {
         color: colorHex,
         wireframe: true,
         transparent: true,
-        opacity: 0.75
+        opacity: 0.85
       })
       const ring = new THREE.Mesh(geo, mat)
       ring.rotation.set(rx, ry, rz)
       return ring
     }
-    const ring1 = createHoloRing(2.05, 0.022, 0x00f0ff, Math.PI / 4, 0, 0)
-    const ring2 = createHoloRing(2.40, 0.018, 0xa855f7, -Math.PI / 3, Math.PI / 6, 0)
-    const ring3 = createHoloRing(2.70, 0.022, 0x00ff66, Math.PI / 2.5, -Math.PI / 4, Math.PI / 5)
+    const ring1 = createHoloRing(2.05, 0.024, 0x0284c7, Math.PI / 4, 0, 0)
+    const ring2 = createHoloRing(2.40, 0.020, 0x7c3aed, -Math.PI / 3, Math.PI / 6, 0)
+    const ring3 = createHoloRing(2.70, 0.024, 0x059669, Math.PI / 2.5, -Math.PI / 4, Math.PI / 5)
     holoGroup.add(ring1, ring2, ring3)
 
     // 3. Orbiting Data Satellites with Light Nodes
     const satCount = 10
     const satellites = []
-    const satGeo = new THREE.OctahedronGeometry(0.12)
-    const satMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff })
+    const satGeo = new THREE.OctahedronGeometry(0.13)
+    const satMat = new THREE.MeshPhongMaterial({ color: 0x000000, emissive: 0x0284c7 })
     for (let i = 0; i < satCount; i++) {
       const sat = new THREE.Mesh(satGeo, satMat)
       const angle = (i / satCount) * Math.PI * 2
@@ -78,15 +79,15 @@ export default function ThreeHero() {
     }
 
     // 4. Floating Holographic Quantum Dust Particles
-    const pCount = 400
+    const pCount = 350
     const pGeo = new THREE.BufferGeometry()
     const pPos = new Float32Array(pCount * 3)
     const pCol = new Float32Array(pCount * 3)
     const palette = [
-      new THREE.Color(0x00f0ff),
-      new THREE.Color(0xa855f7),
-      new THREE.Color(0x00ff66),
-      new THREE.Color(0x38bdf8)
+      new THREE.Color(0x0284c7),
+      new THREE.Color(0x7c3aed),
+      new THREE.Color(0x059669),
+      new THREE.Color(0x0f172a)
     ]
     for (let i = 0; i < pCount; i++) {
       const i3 = i * 3
@@ -102,21 +103,20 @@ export default function ThreeHero() {
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3))
     pGeo.setAttribute('color', new THREE.BufferAttribute(pCol, 3))
     const pMat = new THREE.PointsMaterial({
-      size: 0.048,
+      size: 0.052,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending
+      opacity: 0.85
     })
     const particles = new THREE.Points(pGeo, pMat)
     scene.add(particles)
 
     // Lights
-    scene.add(new THREE.AmbientLight(0x061121, 1.4))
-    const pl1 = new THREE.PointLight(0x00f0ff, 2.4, 25)
+    scene.add(new THREE.AmbientLight(0xffffff, 2.0))
+    const pl1 = new THREE.PointLight(0x0284c7, 3.0, 30)
     pl1.position.set(5, 4, 6)
     scene.add(pl1)
-    const pl2 = new THREE.PointLight(0xa855f7, 2.2, 25)
+    const pl2 = new THREE.PointLight(0x7c3aed, 2.5, 30)
     pl2.position.set(-5, -4, 4)
     scene.add(pl2)
 
