@@ -27,7 +27,7 @@ export default function CVModal({ isOpen, onClose }) {
 
         <div className="modal-content-scroll">
           {/* PDF Embed / Preview */}
-          <div style={{ width: '100%', height: '580px', background: '#f8fafc', borderRadius: '12px', overflow: 'hidden', border: '1px solid #cbd5e1' }}>
+          <div style={{ width: '100%', height: '580px', background: '#0a0e16', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-cyber)' }}>
             <iframe
               src={`${basePath}David_Hany_CV.pdf#toolbar=0`}
               title="David Hany CV"

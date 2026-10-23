@@ -27,8 +27,8 @@ function createTextSprite(text, colorHex) {
   canvas.width = 320; canvas.height = 80
   const ctx = canvas.getContext('2d')
 
-  ctx.fillStyle = '#ffffff'
-  ctx.strokeStyle = '#0f172a'
+  ctx.fillStyle = 'rgba(10, 15, 25, 0.85)'
+  ctx.strokeStyle = colorHex
   ctx.lineWidth = 3
 
   const x = 10, y = 10, w = 300, h = 60, r = 12
@@ -40,7 +40,7 @@ function createTextSprite(text, colorHex) {
   ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y)
   ctx.closePath(); ctx.fill(); ctx.stroke()
 
-  ctx.fillStyle = '#000000'
+  ctx.fillStyle = '#ffffff'
   ctx.font = 'bold 26px "JetBrains Mono", monospace'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
@@ -48,7 +48,7 @@ function createTextSprite(text, colorHex) {
 
   const texture = new THREE.CanvasTexture(canvas)
   texture.minFilter = THREE.LinearFilter
-  const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.96 })
+  const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.92 })
   const sprite = new THREE.Sprite(mat)
   sprite.scale.set(1.1, 0.28, 1)
   return sprite
