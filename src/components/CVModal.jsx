@@ -3,7 +3,8 @@ import React from 'react'
 export default function CVModal({ isOpen, onClose }) {
   if (!isOpen) return null
   const basePath = import.meta.env.BASE_URL || './'
-  const cvUrl = `${basePath}David_Hany_CV.pdf`
+  const cvUrl = `${basePath}David_Hany_CV_v2.pdf?t=${Date.now()}`
+  const directDownloadUrl = `${basePath}David_Hany_CV_v2.pdf`
 
   return (
     <div className="modal-backdrop open" onClick={onClose}>
@@ -30,7 +31,7 @@ export default function CVModal({ isOpen, onClose }) {
               <i className="fas fa-arrow-up-right-from-square text-cyan" /> Fullscreen
             </a>
             <a
-              href={cvUrl}
+              href={directDownloadUrl}
               download="David_Hany_CV.pdf"
               className="cyber-btn cyber-btn-primary"
               style={{ padding: '0.45rem 0.95rem', fontSize: '0.75rem' }}
@@ -61,7 +62,7 @@ export default function CVModal({ isOpen, onClose }) {
                 <div style={{ textAlign: 'center', padding: '3rem 1.5rem', color: '#94a3b8' }}>
                   <p style={{ marginBottom: '1rem', fontSize: '1rem' }}>Your device does not support inline PDF viewing.</p>
                   <a
-                    href={cvUrl}
+                    href={directDownloadUrl}
                     download="David_Hany_CV.pdf"
                     className="cyber-btn cyber-btn-primary"
                   >

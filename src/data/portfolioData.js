@@ -49,7 +49,7 @@ export const portfolioData = {
     location: "Alexandria, Egypt",
     email: "202201324@pua.edu.eg",
     phone: "+20 121 222 2818",
-    cvFileName: "David_Hany_CV.pdf",
+    cvFileName: "David_Hany_CV_v2.pdf",
     
     // Quick Metrics shown in Hero
     metrics: [

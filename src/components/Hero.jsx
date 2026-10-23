@@ -73,7 +73,7 @@ export default function Hero({ onOpenCV }) {
 
             <a
               href={`${basePath}${personalInfo.cvFileName}`}
-              download={personalInfo.cvFileName}
+              download="David_Hany_CV.pdf"
               className="cyber-btn cyber-btn-outline"
               onMouseEnter={() => playBeep(850, 0.03)}
             >
