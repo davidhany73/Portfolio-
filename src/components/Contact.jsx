@@ -67,7 +67,7 @@ export default function Contact() {
                   onClick={() => { playBeep(950, 0.03); openLinkedIn() }}
                   title="Open LinkedIn"
                 >
-                  <i className="fas fa-arrow-up-right-from-square" /> Open
+                  <i className="fas fa-check text-green" /> Open
                 </button>
               </div>
 

@@ -54,16 +54,16 @@ export default function Hero({ onOpenCV }) {
               <span>Download PDF</span>
             </a>
 
-            {/* React Native LinkedIn Link (Verified) */}
+            {/* React Native LinkedIn Link (Verified True Check) */}
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => { playBeep(900, 0.03); openLinkedIn() }}
               style={{ textDecoration: 'none' }}
             >
               <div className="cyber-btn cyber-btn-linkedin">
-                <i className="fab fa-linkedin text-cyan" />
+                <i className="fab fa-linkedin-in text-cyan" />
                 <span>LinkedIn</span>
-                <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '0.75rem', opacity: 0.8 }} />
+                <i className="fas fa-check text-green" style={{ fontSize: '0.85rem' }} />
               </div>
             </TouchableOpacity>
 
