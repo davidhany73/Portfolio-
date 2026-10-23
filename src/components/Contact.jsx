@@ -59,7 +59,7 @@ export default function Contact() {
                 </div>
                 <div className="channel-details">
                   <span className="channel-label">Professional Network</span>
-                  <span className="channel-val">linkedin.com/in/david-hany</span>
+                  <span className="channel-val">linkedin.com/in/david-hany-naeam-a9485032b</span>
                 </div>
                 <button
                   type="button"

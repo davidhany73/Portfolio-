@@ -20,7 +20,7 @@ export default function Footer() {
           <button
             onClick={() => { playBeep(900, 0.03); openLinkedIn() }}
             className="social-link holo-btn"
-            title="LinkedIn (david-hany)"
+            title="LinkedIn (david-hany-naeam-a9485032b)"
             aria-label="LinkedIn"
           >
             <i className="fab fa-linkedin-in text-cyan" />

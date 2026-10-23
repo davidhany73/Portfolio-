@@ -53,7 +53,7 @@ export default function Navbar({ onOpenCV }) {
         <button
           onClick={() => { playBeep(950, 0.04); openLinkedIn() }}
           className="cyber-icon-btn holo-btn"
-          title="Connect on LinkedIn (david-hany)"
+          title="Connect on LinkedIn (david-hany-naeam-a9485032b)"
           aria-label="LinkedIn Profile"
         >
           <i className="fab fa-linkedin-in text-cyan" />
